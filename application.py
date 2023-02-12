@@ -86,7 +86,10 @@ def main():
             for i in range(number):
                 final_list.append(list1[i])
             for i in final_list:
-                Download(i)
+                try:
+                    Download(i)
+                except:
+                    st.write("Server down.. Try after some time")
             st.write("All videos have been downloaded")
             pathdir='.'
             mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
