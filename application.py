@@ -91,7 +91,7 @@ def main():
                 try:
                     Download(i)
                 except:
-                    st.write("Server down.. Try after some time")
+                    st.write("Server down.. It might take some time")
             st.write("All videos have been downloaded")
             pathdir='.'
             mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
@@ -144,7 +144,7 @@ def main():
                         except Exception as e:
                             st.write("Email not sent because %s" %(e))
                 except:
-                    st.write("Server down.. It might take some time")
+                    st.error("Server down.. Try again later")
 def divide_file(filename, parts):
     part_size = math.ceil(os.path.getsize(filename) / parts)
 
