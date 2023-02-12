@@ -117,30 +117,30 @@ def main():
                     else:
                         extract=sound
                     extract.export(filename, format="mp3")
-                st.write("All the audio files have been shortened")
-                sound1=AudioSegment.from_mp3(mp3_filename_list[0])
-                sound2=AudioSegment.from_mp3(mp3_filename_list[1])
-                final_sound=sound1.append(sound2,crossfade=150)
-                i=0
-                noOfFiles=len(mp3_filename_list)
-                for filename in mp3_filename_list:
-                    if(i<2):
-                        i+=1
-                        continue
-                    else:
-                        i+=1
-                        sound1=AudioSegment.from_mp3(filename)
-                        final_sound=final_sound.append(sound1,crossfade=150) 
-                final_sound.export("Mashup.mp3",format="mp3")
-                st.write("Final output is ready")
-                filename='Mashup.mp3'
-                if submit_button:
-                    try:
-                        divide_file('Mashup.mp3',6)
-                        send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
-                        st.write("Email sent")
-                    except Exception as e:
-                        st.write("Email not sent because %s" %(e))
+                    st.write("All the audio files have been shortened")
+                    sound1=AudioSegment.from_mp3(mp3_filename_list[0])
+                    sound2=AudioSegment.from_mp3(mp3_filename_list[1])
+                    final_sound=sound1.append(sound2,crossfade=150)
+                    i=0
+                    noOfFiles=len(mp3_filename_list)
+                    for filename in mp3_filename_list:
+                        if(i<2):
+                            i+=1
+                            continue
+                        else:
+                            i+=1
+                            sound1=AudioSegment.from_mp3(filename)
+                            final_sound=final_sound.append(sound1,crossfade=150) 
+                    final_sound.export("Mashup.mp3",format="mp3")
+                    st.write("Final output is ready")
+                    filename='Mashup.mp3'
+                    if submit_button:
+                        try:
+                            divide_file('Mashup.mp3',6)
+                            send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
+                            st.write("Email sent")
+                        except Exception as e:
+                            st.write("Email not sent because %s" %(e))
                 except:
                     st.write("Server down.. It might take some time")
 def divide_file(filename, parts):
