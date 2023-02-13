@@ -37,7 +37,7 @@ def main():
         )
         number= st.number_input(
         "Enter the number of videos 👇",
-        min_value=1,
+        min_value=2,
         max_value=30,
         )
         cut= st.number_input(
