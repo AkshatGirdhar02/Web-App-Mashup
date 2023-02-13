@@ -20,9 +20,7 @@ def Download(link):
     youtubeObject.download()
 
 def send_parts(email,parts):
-    sender=st.secrets['SMTP_MAIL']
-    password=st.secrets['SMTP_PASS']
-    yag = yagmail.SMTP(sender, password)
+    yag = yagmail.SMTP('akshatgirdhar02@gmail.com', 'ocyuxqgobnrtelri')
     subject = 'Mashup File'
     contents="Please find the attachment below"
 
@@ -39,7 +37,7 @@ def main():
         )
         number= st.number_input(
         "Enter the number of videos 👇",
-        min_value=10,
+        min_value=1,
         max_value=30,
         )
         cut= st.number_input(
@@ -80,75 +78,69 @@ def main():
             links=list(searchResults.values())
             list1=[]
             final_list=[]
-            try:
-                for i in range(len(links)):
-                    yt = YouTube(links[i]) 
-                    video_length = yt.length
-                    if(video_length<=300):
-                        list1.append(links[i])
-                for i in range(number):
-                    final_list.append(list1[i])
-                for i in final_list:
-                    try:
-                        Download(i)
-                    except:
-                        continue
-#                         st.write("Server down.. It might take some time")
-                st.write("All videos have been downloaded")
-                pathdir='.'
-                mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
-                for filename in mp4_filenames_list:
-                    video=mp.VideoFileClip(filename)
-                    audio=video.audio
-                    if(audio is not None):
-                        mp3_file_name=filename.replace('.mp4','.mp3')
-                        audio.write_audiofile(mp3_file_name)
-                        video.close()
-                st.write("All videos are converted to audio")
-                mp3_filename_list=glob.glob(os.path.join(pathdir,"*mp3"))
-                for filename in mp3_filename_list:
-                    audio = MP3(filename)
-                    audio_info = audio.info
-                    length = int(audio_info.length)
-                    try:
-                        sound = AudioSegment.from_mp3(filename)
-                        if(cut<length):
-                            extract = sound[cut*1000:]
-                        elif(length>=20):
-                            extract=sound[20*1000:]
-                        elif(length>=10):
-                            extract=sound[10*1000:]
-                        else:
-                            extract=sound
-                        extract.export(filename, format="mp3")
-                        st.write("All the audio files have been shortened")
-                        sound1=AudioSegment.from_mp3(mp3_filename_list[0])
-                        sound2=AudioSegment.from_mp3(mp3_filename_list[1])
-                        final_sound=sound1.append(sound2,crossfade=150)
-                        i=0
-                        noOfFiles=len(mp3_filename_list)
-                        for filename in mp3_filename_list:
-                            if(i<2):
-                                i+=1
-                                continue
-                            else:
-                                i+=1
-                                sound1=AudioSegment.from_mp3(filename)
-                                final_sound=final_sound.append(sound1,crossfade=150) 
-                        final_sound.export("Mashup.mp3",format="mp3")
-                        st.write("Final output is ready")
-                        filename='Mashup.mp3'
-                        if submit_button:
-                            try:
-                                divide_file('Mashup.mp3',6)
-                                send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
-                                st.write("Email sent")
-                            except Exception as e:
-                                st.write("Email not sent because %s" %(e))
-                    except:
-                        st.error("Server down.. Try again later")
-            except:
-                st.error("Server down.. Try again later")
+            for i in range(len(links)):
+                yt = YouTube(links[i]) 
+                video_length = yt.length
+                if(video_length<=300):
+                    list1.append(links[i])
+            for i in range(number):
+                final_list.append(list1[i])
+            for i in final_list:
+                print(i)
+                try:
+                    Download(i)
+                except:
+                    continue
+            st.write("All videos have been downloaded")
+            pathdir='.'
+            mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
+            for filename in mp4_filenames_list:
+                video=mp.VideoFileClip(filename)
+                audio=video.audio
+                if(audio is not None):
+                    mp3_file_name=filename.replace('.mp4','.mp3')
+                    audio.write_audiofile(mp3_file_name)
+                    video.close()
+            st.write("All videos are converted to audio")
+            mp3_filename_list=glob.glob(os.path.join(pathdir,"*mp3"))
+            for filename in mp3_filename_list:
+                audio = MP3(filename)
+                audio_info = audio.info
+                length = int(audio_info.length)
+                sound = AudioSegment.from_mp3(filename)
+                if(cut<length):
+                    extract = sound[cut*1000:]
+                elif(length>=20):
+                    extract=sound[20*1000:]
+                elif(length>=10):
+                    extract=sound[10*1000:]
+                else:
+                    extract=sound
+                extract.export(filename, format="mp3")
+            st.write("All the audio files have been shortened")
+            sound1=AudioSegment.from_mp3(mp3_filename_list[0])
+            sound2=AudioSegment.from_mp3(mp3_filename_list[1])
+            final_sound=sound1.append(sound2,crossfade=150)
+            i=0
+            noOfFiles=len(mp3_filename_list)
+            for filename in mp3_filename_list:
+                if(i<2):
+                    i+=1
+                    continue
+                else:
+                    i+=1
+                    sound1=AudioSegment.from_mp3(filename)
+                    final_sound=final_sound.append(sound1,crossfade=150) 
+            final_sound.export("Mashup.mp3",format="mp3")
+            st.write("Final output is ready")
+            filename='Mashup.mp3'
+            if submit_button:
+                try:
+                    divide_file('Mashup.mp3',6)
+                    send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
+                    st.write("Email sent")
+                except Exception as e:
+                    st.write("Email not sent because %s" %(e))
 def divide_file(filename, parts):
     part_size = math.ceil(os.path.getsize(filename) / parts)
 
@@ -183,5 +175,5 @@ def divide_file(filename, parts):
 
 if __name__=="__main__":
     main()
-#     deleteVideos()
-#     deleteAudios()
+    # deleteVideos()
+    # deleteAudios()
