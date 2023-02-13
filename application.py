@@ -92,7 +92,8 @@ def main():
                     try:
                         Download(i)
                     except:
-                        st.write("Server down.. It might take some time")
+                        continue
+#                         st.write("Server down.. It might take some time")
                 st.write("All videos have been downloaded")
                 pathdir='.'
                 mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
