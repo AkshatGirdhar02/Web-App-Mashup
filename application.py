@@ -103,7 +103,6 @@ def main():
                     video.close()
             st.write("All videos are converted to audio")
             mp3_filename_list=glob.glob(os.path.join(pathdir,"*mp3"))
-            st.write(len(mp3_filename_list))
             for filename in mp3_filename_list:
                 audio = MP3(filename)
                 audio_info = audio.info
@@ -119,7 +118,7 @@ def main():
                     extract=sound
                 extract.export(filename, format="mp3")
             st.write("All the audio files have been shortened")
-            st.write(len(mp3_filename_list))
+#             st.write(len(mp3_filename_list))
             sound1=AudioSegment.from_mp3(mp3_filename_list[0])
             sound2=AudioSegment.from_mp3(mp3_filename_list[1])
             final_sound=sound1.append(sound2,crossfade=150)
