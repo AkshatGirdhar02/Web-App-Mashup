@@ -117,8 +117,8 @@ def main():
                 else:
                     extract=sound
                 extract.export(filename, format="mp3")
-            st.write(len(mp3_filename_list)#####
             st.write("All the audio files have been shortened")
+            st.write(len(mp3_filename_list))
             sound1=AudioSegment.from_mp3(mp3_filename_list[0])
             sound2=AudioSegment.from_mp3(mp3_filename_list[1])
             final_sound=sound1.append(sound2,crossfade=150)
