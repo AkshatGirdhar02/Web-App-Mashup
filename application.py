@@ -95,13 +95,13 @@ def main():
             for i in range(len(links)):
 #                 yt = YouTube(links[i]) 
                  yt = pytube.YouTube(video_url)
-                vid_info = yt.streams.first().player_config_args["player_response"]
-                vid_info_dict = json.loads(vid_info)['videoDetails']
-                video_title = vid_info_dict['title']
-                video_author = vid_info_dict['author']
-                video_views = vid_info_dict['viewCount']
-                video_likes = vid_info_dict['likes']
-                video_dislikes = vid_info_dict['dislikes']
+                 vid_info = yt.streams.first().player_config_args["player_response"]
+                 vid_info_dict = json.loads(vid_info)['videoDetails']
+                 video_title = vid_info_dict['title']
+                 video_author = vid_info_dict['author']
+                 video_views = vid_info_dict['viewCount']
+                 video_likes = vid_info_dict['likes']
+                 video_dislikes = vid_info_dict['dislikes']
                 #######
 #                  video_length = yt.length
 #                     if(video_length<=300):
