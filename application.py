@@ -96,7 +96,8 @@ def main():
             for i in range(len(links)):
 #                 yt = YouTube(links[i]) 
                  yt = pytube.YouTube(links[i])
-                 vid_info = yt.streams.first().player_config_args["player_response"]
+                 vid_info = yt.streams.get_highest_resolution().player_config_args["player_response"]
+#                  vid_info = yt.streams.first().player_config_args["player_response"]
                  vid_info_dict = json.loads(vid_info)['videoDetails']
                  video_title = vid_info_dict['title']
                  video_author = vid_info_dict['author']
