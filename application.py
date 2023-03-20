@@ -95,7 +95,7 @@ def main():
             final_list=[]
             for i in range(len(links)):
 #                 yt = YouTube(links[i]) 
-                 yt = pytube.YouTube(video_url)
+                 yt = pytube.YouTube(links[i])
                  vid_info = yt.streams.first().player_config_args["player_response"]
                  vid_info_dict = json.loads(vid_info)['videoDetails']
                  video_title = vid_info_dict['title']
