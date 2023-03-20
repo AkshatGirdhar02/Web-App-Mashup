@@ -87,7 +87,12 @@ def main():
                 if yt is None:
                     raise ValueError('Could not retrieve video')
                 else:
-                    video_length = yt.length
+                    length_seconds = self.vid_info.get('videoDetails', {}).get('lengthSeconds')
+                    if length_seconds is not None:
+                        video_length = int(length_seconds)
+                    else:
+                        video_length = 0 # or whatever default value you want to set
+#                     video_length = yt.length
                     if(video_length<=300):
                         list1.append(links[i])
             for i in range(number):
