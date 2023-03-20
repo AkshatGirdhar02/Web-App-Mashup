@@ -93,7 +93,7 @@ def main():
             final_list=[]
             for i in range(len(links)):
                 yt = YouTube(links[i]) 
-                vid_info = yt.player_config_args["player_response"]["videoDetails"]
+                vid_info = json.loads(yt.player_config_args["player_response"])['videoDetails']
                 st.write(f"Title: {vid_info['title']}")
                 st.write(f"Author: {vid_info['author']}")
                 st.write(f"Video Length: {int(vid_info['lengthSeconds'])//60} minutes {int(vid_info['lengthSeconds'])%60} seconds")
