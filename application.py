@@ -28,6 +28,19 @@ def send_parts(email,parts):
         part_filename = 'Part{}_{}'.format(i+1,'Mashup.mp3')
         yag.send(email, subject,contents,attachments= [part_filename])
 
+ class VideoInfo:
+    def __init__(self, vid_info):
+        self.vid_info = vid_info
+
+    def get_title(self):
+        return self.vid_info.get('title')
+
+    def get_author(self):
+        return self.vid_info.get('author')
+
+    def get_length_seconds(self):
+        return self.vid_info.get('videoDetails', {}).get('lengthSeconds')       
+        
 def main():
     st.title("Mashup")
     st.markdown("**Output will be sent via email as a set of 6 mp3 files,since size of final file might be large and couldn't be sent in single go.**")
@@ -80,6 +93,11 @@ def main():
             final_list=[]
             for i in range(len(links)):
                 yt = YouTube(links[i]) 
+                vid_info = yt.player_response['videoDetails']
+                video_info = VideoInfo(vid_info)
+                st.write(f'Title: {video_info.get_title()}')
+                st.write(f'Author: {video_info.get_author()}')
+                st.write(f'Length (seconds): {video_info.get_length_seconds()}')
                 #######
 #                  video_length = yt.length
 #                     if(video_length<=300):
