@@ -28,7 +28,7 @@ def send_parts(email,parts):
         part_filename = 'Part{}_{}'.format(i+1,'Mashup.mp3')
         yag.send(email, subject,contents,attachments= [part_filename])
 
- class VideoInfo:
+class VideoInfo:
     def __init__(self, vid_info):
         self.vid_info = vid_info
 
@@ -39,7 +39,7 @@ def send_parts(email,parts):
         return self.vid_info.get('author')
 
     def get_length_seconds(self):
-        return self.vid_info.get('videoDetails', {}).get('lengthSeconds')       
+        return self.vid_info.get('videoDetails', {}).get('lengthSeconds')      
         
 def main():
     st.title("Mashup")
