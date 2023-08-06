@@ -20,7 +20,9 @@ def Download(link):
     youtubeObject.download()
 
 def send_parts(email,parts):
-    yag = yagmail.SMTP(SMTP_MAIL,SMTP_PASS)
+    email=st.secrets("SMTP_MAIL")
+    password=st.secrets("SMTP_PASS")
+    yag = yagmail.SMTP(email,password)
     subject = 'Mashup File'
     contents="Please find the attachment below"
 
