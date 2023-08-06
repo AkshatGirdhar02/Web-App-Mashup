@@ -76,15 +76,15 @@ def main():
             for v in s.results:
                 searchResults[v.title] = v.watch_url
             links=list(searchResults.values())
-            st.write("Links found:",links)
+            # st.write("Links found:",links)
             list1=[]
             final_list=[]
             st.write("Going inside for")
             for i in range(len(links)):
-                st.write("Inside for:")
+                # st.write("Inside for:")
                 yt = YouTube(links[i])
                 # st.write(yt)
-                st.write("Title is: ",yt.title)
+                # st.write("Title is: ",yt.title)
                 try:
                     video_length = yt.length
                     if(video_length<=300):
@@ -92,12 +92,14 @@ def main():
                 except:
                     pass
             st.write("Number of videos required: ",number)
-            st.write("Links of videos found: ",list1)
+            # st.write("Links of videos found: ",list1)
             for i in range(number):
                 final_list.append(list1[i])
             for i in final_list:
-                print(i)
+                # print(i)
                 try:
+                    yt = YouTube(i)
+                    st.write("Title is: ",yt.title)
                     Download(i)
                 except:
                     continue
