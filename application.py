@@ -1,6 +1,5 @@
 import shutil
 import sys
-import  pytube
 from pytube import YouTube
 from pytube import Search
 import warnings
@@ -10,7 +9,6 @@ import os
 import math
 import moviepy.editor as mp
 import mutagen
-import json
 from mutagen.mp3 import MP3
 from pydub import AudioSegment
 import streamlit as st
@@ -30,19 +28,6 @@ def send_parts(email,parts):
         part_filename = 'Part{}_{}'.format(i+1,'Mashup.mp3')
         yag.send(email, subject,contents,attachments= [part_filename])
 
-class VideoInfo:
-    def __init__(self, vid_info):
-        self.vid_info = vid_info
-
-    def get_title(self):
-        return self.vid_info.get('title')
-
-    def get_author(self):
-        return self.vid_info.get('author')
-
-    def get_length_seconds(self):
-        return self.vid_info.get('videoDetails', {}).get('lengthSeconds')      
-        
 def main():
     st.title("Mashup")
     st.markdown("**Output will be sent via email as a set of 6 mp3 files,since size of final file might be large and couldn't be sent in single go.**")
@@ -52,7 +37,7 @@ def main():
         )
         number= st.number_input(
         "Enter the number of videos 👇",
-        min_value=2,
+        min_value=1,
         max_value=30,
         )
         cut= st.number_input(
@@ -91,34 +76,23 @@ def main():
             for v in s.results:
                 searchResults[v.title] = v.watch_url
             links=list(searchResults.values())
+            st.write("Links found:",links)
             list1=[]
             final_list=[]
+            st.write("Going inside for")
             for i in range(len(links)):
-#                 yt = YouTube(links[i]) 
-                 yt = pytube.YouTube(links[i])
-                 vid_info = yt.streams.get_highest_resolution().player_config_args["player_response"]
-#                  vid_info = yt.streams.first().player_config_args["player_response"]
-                 vid_info_dict = json.loads(vid_info)['videoDetails']
-                 video_title = vid_info_dict['title']
-                 video_author = vid_info_dict['author']
-                 video_views = vid_info_dict['viewCount']
-                 video_likes = vid_info_dict['likes']
-                 video_dislikes = vid_info_dict['dislikes']
-                #######
-#                  video_length = yt.length
-#                     if(video_length<=300):
-#                         list1.append(links[i])
-                 if yt is None:
-                     raise ValueError('Could not retrieve video')
-                 else:
-                     length_seconds = self.vid_info.get('videoDetails', {}).get('lengthSeconds')
-                     if length_seconds is not None:
-                         video_length = int(length_seconds)
-                     else:
-                         video_length = 0 # or whatever default value you want to set
-#                     video_length = yt.length
-                     if(video_length<=300):
-                         list1.append(links[i])
+                st.write("Inside for:")
+                yt = YouTube(links[i])
+                # st.write(yt)
+                st.write("Title is: ",yt.title)
+                try:
+                    video_length = yt.length
+                    if(video_length<=300):
+                        list1.append(links[i])
+                except:
+                    pass
+            st.write("Number of videos required: ",number)
+            st.write("Links of videos found: ",list1)
             for i in range(number):
                 final_list.append(list1[i])
             for i in final_list:
@@ -154,7 +128,6 @@ def main():
                     extract=sound
                 extract.export(filename, format="mp3")
             st.write("All the audio files have been shortened")
-#             st.write(len(mp3_filename_list))
             sound1=AudioSegment.from_mp3(mp3_filename_list[0])
             sound2=AudioSegment.from_mp3(mp3_filename_list[1])
             final_sound=sound1.append(sound2,crossfade=150)
