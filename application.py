@@ -22,7 +22,7 @@ def Download(link):
 def send_parts(email,parts):
     email=st.secrets("SMTP_MAIL")
     password=st.secrets("SMTP_PASS")
-    yag = yagmail.SMTP(email,password)
+    yag = yagmail.SMTP("formyapp2023@gmail.com","vxicuciorwyhabil")
     subject = 'Mashup File'
     contents="Please find the attachment below"
 
