@@ -164,7 +164,7 @@ def divide_file(filename, parts):
                 p.write(part)
 
 def deleteVideos():
-    folder = '.\\' 
+    folder = os.getcwd()
     for filename in os.listdir(folder):
         if filename.endswith(".mp4"):
             file_path = os.path.join(folder, filename)
@@ -174,7 +174,7 @@ def deleteVideos():
                 shutil.rmtree(file_path)
 
 def deleteAudios():
-    folder = '.\\' 
+    folder = os.getcwd()
     for filename in os.listdir(folder):
         if filename.endswith(".mp3"):
             file_path = os.path.join(folder, filename)
