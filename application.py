@@ -108,6 +108,7 @@ def main():
             pathdir='.'
             mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
             if(len(mp4_filenames_list)!=0):
+                st.write("Mp4 list: ",mp4_filenames_list)
                 for filename in mp4_filenames_list:
                     video=mp.VideoFileClip(filename)
                 audio=video.audio
