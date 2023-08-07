@@ -117,6 +117,7 @@ def main():
                     video.close()
                 st.write("All videos are converted to audio")
                 mp3_filename_list=glob.glob(os.path.join(pathdir,"*mp3"))
+                st.write("Mp3 file list :",mp3_filename_list)
                 for filename in mp3_filename_list:
                     audio = MP3(filename)
                     audio_info = audio.info
