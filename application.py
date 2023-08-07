@@ -152,6 +152,8 @@ def main():
                     divide_file('Mashup.mp3',6)
                     send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
                     st.write("Email sent")
+                    deleteVideos()
+                    deleteAudios()
                 except Exception as e:
                     st.write("Email not sent because %s" %(e))
 def divide_file(filename, parts):
@@ -188,5 +190,5 @@ def deleteAudios():
 
 if __name__=="__main__":
     main()
-    deleteVideos()
-    deleteAudios()
+    # deleteVideos()
+    # deleteAudios()
