@@ -152,8 +152,8 @@ def main():
                     divide_file('Mashup.mp3',6)
                     send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
                     st.write("Email sent")
-                    deleteVideos()
-                    deleteAudios()
+                    # deleteVideos()
+                    # deleteAudios()
                 except Exception as e:
                     st.write("Email not sent because %s" %(e))
 def divide_file(filename, parts):
@@ -167,7 +167,7 @@ def divide_file(filename, parts):
                 p.write(part)
 
 def deleteVideos():
-    folder = os.getcwd()
+    folder = '.'
     for filename in os.listdir(folder):
         if filename.endswith(".mp4"):
             file_path = os.path.join(folder, filename)
@@ -177,7 +177,7 @@ def deleteVideos():
                 shutil.rmtree(file_path)
 
 def deleteAudios():
-    folder = os.getcwd()
+    folder = '.'
     for filename in os.listdir(folder):
         if filename.endswith(".mp3"):
             file_path = os.path.join(folder, filename)
@@ -190,5 +190,5 @@ def deleteAudios():
 
 if __name__=="__main__":
     main()
-    # deleteVideos()
-    # deleteAudios()
+    deleteVideos()
+    deleteAudios()
