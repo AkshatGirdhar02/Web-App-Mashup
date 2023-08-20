@@ -65,7 +65,8 @@ def main():
     if (singer is not None and number is not None and cut is not None and email is not None):
         number=int(number)
         cut=int(cut)
-        s=Search(singer+"songs")
+        toSearch=singer+'songs'
+        s=Search(toSearch)
         try:
             if(len(s.results)!=0):
                 found=len(s.results)
