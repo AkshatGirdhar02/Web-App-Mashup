@@ -105,12 +105,6 @@ def main():
                         Download(i)
                     except:
                         continue
-                st.write("All videos have been downloaded")
-                start_time = time.time()
-                end_time = start_time + 30 * 60  # 30 minutes
-                while time.time() < end_time:
-                    st.spinner('Conversion to audio in progress...')
-                    time.sleep(1)
                 pathdir='.'
                 mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
                 if(len(mp4_filenames_list)!=0):
@@ -172,7 +166,7 @@ def main():
             start_time = time.time()
             end_time = start_time + 30 * 60  # 30 minutes
             while time.time() < end_time:
-                st.spinner('Conversion to audio in progress...')
+                st.spinner(text="Conversion to audio in progress...")
                 time.sleep(1)
 
             
