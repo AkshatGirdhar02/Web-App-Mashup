@@ -66,103 +66,104 @@ def main():
         number=int(number)
         cut=int(cut)
         s=Search(singer)
-        if(len(s.results)!=0):
-            found=len(s.results)
-            searchResults = {}
-            remaining=3*number-found
-            while(remaining>0):
-                s.get_next_results()
+        try:
+            if(len(s.results)!=0):
                 found=len(s.results)
-                remaining=number-found
-            for v in s.results:
-                searchResults[v.title] = v.watch_url
-            links=list(searchResults.values())
-            # st.write("Links found:",links)
-            list1=[]
-            final_list=[]
-            # st.write("Going inside for")
-            for i in range(len(links)):
-                # st.write("Inside for:")
-                yt = YouTube(links[i])
-                # st.write(yt)
-                # st.write("Title is: ",yt.title)
-                try:
-                    video_length = yt.length
-                    if(video_length<=300):
-                        list1.append(links[i])
-                except:
-                    pass
-            st.write("Number of videos required: ",number)
-            # st.write("Links of videos found: ",list1)
-            for i in range(number):
-                final_list.append(list1[i])
-            for i in final_list:
-                # print(i)
-                try:
-                    yt = YouTube(i)
-                    st.write("Title is: ",yt.title)
-                    Download(i)
-                except:
-                    continue
-            st.write("All videos have been downloaded")
-            pathdir='.'
-            mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
-            if(len(mp4_filenames_list)!=0):
-                st.write("Mp4 list: ",mp4_filenames_list)
-                for filename in mp4_filenames_list:
-                    video=mp.VideoFileClip(filename)
-                audio=video.audio
-                if(audio is not None):
-                    mp3_file_name=filename.replace('.mp4','.mp3')
-                    audio.write_audiofile(mp3_file_name)
-                    video.close()
-                else:
-                    st.write("Audio not available")
-                st.write("All videos are converted to audio")
-                mp3_filename_list=glob.glob(os.path.join(pathdir,"*mp3"))
-                st.write("Mp3 file list :",mp3_filename_list)
-                for filename in mp3_filename_list:
-                    audio = MP3(filename)
-                    audio_info = audio.info
-                    length = int(audio_info.length)
-                    sound = AudioSegment.from_mp3(filename)
-                    if(cut<length):
-                        extract = sound[cut*1000:]
-                    elif(length>=20):
-                        extract=sound[20*1000:]
-                    elif(length>=10):
-                        extract=sound[10*1000:]
-                    else:
-                        extract=sound
-                    extract.export(filename, format="mp3")
-                st.write("All the audio files have been shortened")
-                st.write("Mp3 file list :",mp3_filename_list)
-                sound1=AudioSegment.from_mp3(mp3_filename_list[0])
-                sound2=AudioSegment.from_mp3(mp3_filename_list[1])
-                final_sound=sound1.append(sound2,crossfade=150)
-                i=0
-                noOfFiles=len(mp3_filename_list)
-                for filename in mp3_filename_list:
-                    if(i<2):
-                        i+=1
-                        continue
-                    else:
-                        i+=1
-                        sound1=AudioSegment.from_mp3(filename)
-                        final_sound=final_sound.append(sound1,crossfade=150) 
-                final_sound.export("Mashup.mp3",format="mp3")
-                st.write("Final output is ready")
-                filename='Mashup.mp3'
-                if submit_button:
+                searchResults = {}
+                remaining=3*number-found
+                while(remaining>0):
+                    s.get_next_results()
+                    found=len(s.results)
+                    remaining=number-found
+                for v in s.results:
+                    searchResults[v.title] = v.watch_url
+                links=list(searchResults.values())
+                # st.write("Links found:",links)
+                list1=[]
+                final_list=[]
+                # st.write("Going inside for")
+                for i in range(len(links)):
+                    # st.write("Inside for:")
+                    yt = YouTube(links[i])
+                    # st.write(yt)
+                    # st.write("Title is: ",yt.title)
                     try:
-                        divide_file('Mashup.mp3',6)
-                        send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
-                        st.write("Email sent")
-                        # deleteVideos()
-                        # deleteAudios()
-                    except Exception as e:
-                        st.write("Email not sent because %s" %(e))
-        else:
+                        video_length = yt.length
+                        if(video_length<=300):
+                            list1.append(links[i])
+                    except:
+                        pass
+                st.write("Number of videos required: ",number)
+                # st.write("Links of videos found: ",list1)
+                for i in range(number):
+                    final_list.append(list1[i])
+                for i in final_list:
+                    # print(i)
+                    try:
+                        yt = YouTube(i)
+                        st.write("Title is: ",yt.title)
+                        Download(i)
+                    except:
+                        continue
+                st.write("All videos have been downloaded")
+                pathdir='.'
+                mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
+                if(len(mp4_filenames_list)!=0):
+                    st.write("Mp4 list: ",mp4_filenames_list)
+                    for filename in mp4_filenames_list:
+                        video=mp.VideoFileClip(filename)
+                    audio=video.audio
+                    if(audio is not None):
+                        mp3_file_name=filename.replace('.mp4','.mp3')
+                        audio.write_audiofile(mp3_file_name)
+                        video.close()
+                    else:
+                        st.write("Audio not available")
+                    st.write("All videos are converted to audio")
+                    mp3_filename_list=glob.glob(os.path.join(pathdir,"*mp3"))
+                    st.write("Mp3 file list :",mp3_filename_list)
+                    for filename in mp3_filename_list:
+                        audio = MP3(filename)
+                        audio_info = audio.info
+                        length = int(audio_info.length)
+                        sound = AudioSegment.from_mp3(filename)
+                        if(cut<length):
+                            extract = sound[cut*1000:]
+                        elif(length>=20):
+                            extract=sound[20*1000:]
+                        elif(length>=10):
+                            extract=sound[10*1000:]
+                        else:
+                            extract=sound
+                        extract.export(filename, format="mp3")
+                    st.write("All the audio files have been shortened")
+                    st.write("Mp3 file list :",mp3_filename_list)
+                    sound1=AudioSegment.from_mp3(mp3_filename_list[0])
+                    sound2=AudioSegment.from_mp3(mp3_filename_list[1])
+                    final_sound=sound1.append(sound2,crossfade=150)
+                    i=0
+                    noOfFiles=len(mp3_filename_list)
+                    for filename in mp3_filename_list:
+                        if(i<2):
+                            i+=1
+                            continue
+                        else:
+                            i+=1
+                            sound1=AudioSegment.from_mp3(filename)
+                            final_sound=final_sound.append(sound1,crossfade=150) 
+                    final_sound.export("Mashup.mp3",format="mp3")
+                    st.write("Final output is ready")
+                    filename='Mashup.mp3'
+                    if submit_button:
+                        try:
+                            divide_file('Mashup.mp3',6)
+                            send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
+                            st.write("Email sent")
+                            # deleteVideos()
+                            # deleteAudios()
+                        except Exception as e:
+                            st.write("Email not sent because %s" %(e))
+        except:
             start_time = time.time()
             end_time = start_time + 30 * 60  # 30 minutes
             while time.time() < end_time:
