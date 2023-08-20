@@ -157,9 +157,10 @@ def main():
                         try:
                             divide_file('Mashup.mp3',6)
                             send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
+                            os.remove(filename)
                             st.write("Email sent")
-                            deleteVideos()
-                            deleteAudios()
+                            # deleteVideos()
+                            # deleteAudios()
                         except Exception as e:
                             st.write("Email not sent because %s" %(e))
         except:
@@ -180,25 +181,25 @@ def divide_file(filename, parts):
             with open(part_filename, 'wb') as p:
                 p.write(part)
 
-def deleteVideos():
-    folder = '.'
-    for filename in os.listdir(folder):
-        if filename.endswith(".mp4"):
-            file_path = os.path.join(folder, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+# def deleteVideos():
+#     folder = '.'
+#     for filename in os.listdir(folder):
+#         if filename.endswith(".mp4"):
+#             file_path = os.path.join(folder, filename)
+#             if os.path.isfile(file_path) or os.path.islink(file_path):
+#                 os.unlink(file_path)
+#             elif os.path.isdir(file_path):
+#                 shutil.rmtree(file_path)
 
-def deleteAudios():
-    folder = '.'
-    for filename in os.listdir(folder):
-        if filename.endswith(".mp3"):
-            file_path = os.path.join(folder, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+# def deleteAudios():
+#     folder = '.'
+#     for filename in os.listdir(folder):
+#         if filename.endswith(".mp3"):
+#             file_path = os.path.join(folder, filename)
+#             if os.path.isfile(file_path) or os.path.islink(file_path):
+#                 os.unlink(file_path)
+#             elif os.path.isdir(file_path):
+#                 shutil.rmtree(file_path)
 
 
 
