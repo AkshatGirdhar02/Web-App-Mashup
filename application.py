@@ -157,7 +157,13 @@ def main():
                         try:
                             divide_file('Mashup.mp3',6)
                             send_parts(email,['Part1_Mashup.mp3', 'Part2_Mashup.mp3', 'Part3_Mashup.mp3', 'Part4_Mashup.mp3', 'Part5_Mashup.mp3', 'Part6_Mashup.mp3'])
-                            os.remove(filename)
+                            # List all files in the directory
+                            file_list = os.listdir(pathdir)
+                            # Iterate through the files and remove them
+                            for filename in file_list:
+                                file_path = os.path.join(pathdir, filename)
+                                if os.path.isfile(file_path):
+                                    os.remove(file_path)
                             st.write("Email sent")
                             # deleteVideos()
                             # deleteAudios()
