@@ -166,8 +166,8 @@ def main():
             start_time = time.time()
             end_time = start_time + 30 * 60  # 30 minutes
             while time.time() < end_time:
-                st.spinner(text="Conversion to audio in progress...")
-                time.sleep(1)
+                with st.spinner('In Progress...'):
+                    time.sleep(5)
 
             
 def divide_file(filename, parts):
