@@ -162,7 +162,7 @@ def main():
                             # Iterate through the files and remove them
                             for filename in os.listdir(pathdir):
                                 if filename.endswith((".mp4", ".mp3")):
-                                    file_path = os.path.join(directory, filename)
+                                    file_path = os.path.join(pathdir, filename)
                                     os.remove(file_path)
                             st.write("Email sent")
                             # deleteVideos()
