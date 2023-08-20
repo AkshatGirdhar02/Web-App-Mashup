@@ -108,7 +108,7 @@ def main():
                         continue
                 pathdir='.'
                 mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
-                int count=0;
+                count=0;
                 if(len(mp4_filenames_list)!=0):
                     st.write("Mp4 list: ",mp4_filenames_list)
                     for filename in mp4_filenames_list:
@@ -119,7 +119,7 @@ def main():
                                 mp3_file_name=filename.replace('.mp4','.mp3')
                                 audio.write_audiofile(mp3_file_name)
                                 video.close()
-                                count++;
+                                count+=1;
                             else:
                                 st.write("Audio not available")
                     st.write("All videos are converted to audio")
