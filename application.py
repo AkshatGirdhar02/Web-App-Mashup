@@ -96,7 +96,7 @@ def main():
                         pass
                 st.write("Number of videos required: ",number)
                 # st.write("Links of videos found: ",list1)
-                for i in range(number):
+                for i in range(2*number):
                     final_list.append(list1[i])
                 for i in final_list:
                     # print(i)
@@ -108,17 +108,20 @@ def main():
                         continue
                 pathdir='.'
                 mp4_filenames_list=glob.glob(os.path.join(pathdir,"*mp4"))
+                int count=0;
                 if(len(mp4_filenames_list)!=0):
                     st.write("Mp4 list: ",mp4_filenames_list)
                     for filename in mp4_filenames_list:
-                        video=mp.VideoFileClip(filename)
-                        audio=video.audio
-                        if(audio is not None):
-                            mp3_file_name=filename.replace('.mp4','.mp3')
-                            audio.write_audiofile(mp3_file_name)
-                            video.close()
-                        else:
-                            st.write("Audio not available")
+                        while(count<number):
+                            video=mp.VideoFileClip(filename)
+                            audio=video.audio
+                            if(audio is not None):
+                                mp3_file_name=filename.replace('.mp4','.mp3')
+                                audio.write_audiofile(mp3_file_name)
+                                video.close()
+                                count++;
+                            else:
+                                st.write("Audio not available")
                     st.write("All videos are converted to audio")
                     mp3_filename_list=glob.glob(os.path.join(pathdir,"*mp3"))
                     st.write("Mp3 file list :",mp3_filename_list)
